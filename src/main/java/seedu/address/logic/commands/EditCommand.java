@@ -2,8 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEDUCTIONS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OTHOUR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OTRATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -45,6 +48,9 @@ public class EditCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_SALARY + "SALARY]"
+            + "[" + PREFIX_OTHOUR + "OT_HOURS]"
+            + "[" + PREFIX_OTRATE + "OT_RATE]"
+            + "[" + PREFIX_DEDUCTIONS + "DEDUCTIONS]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -103,10 +109,19 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Salary updatedSalary = editPersonDescriptor.getSalary().orElse(personToEdit.getSalary());
+        String otHours = editPersonDescriptor.getOtHour().orElse(
+            String.valueOf(personToEdit.getSalary().getOverTimeHour()));
+        String otRate = editPersonDescriptor.getOtRate().orElse(
+            String.valueOf(personToEdit.getSalary().getOverTimeRate()));
+        String deductibles = editPersonDescriptor.getDeductibles().orElse(
+            String.valueOf(personToEdit.getSalary().getPayDeductions()));
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         Person editedPerson = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
-        editedPerson.setSalary(updatedSalary.toString());
+        updatedSalary.setOverTimeHour(Double.parseDouble(otHours));
+        updatedSalary.setOverTimeRate(Double.parseDouble(otRate));
+        updatedSalary.setPayDeductions(Double.parseDouble(deductibles));
+        editedPerson.setSalary(updatedSalary);
 
         return editedPerson;
     }
@@ -139,6 +154,9 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Salary salary;
+        private String otHours;
+        private String otRate;
+        private String deductibles;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -153,6 +171,9 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setSalary(toCopy.salary);
+            setOtHour(toCopy.otHours);
+            setOtRate(toCopy.otRate);
+            setDeductibles(toCopy.deductibles);
             setTags(toCopy.tags);
         }
 
@@ -160,7 +181,8 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, salary, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address,
+              salary, otHours, otRate, deductibles, tags);
         }
 
         public void setName(Name name) {
@@ -193,6 +215,30 @@ public class EditCommand extends Command {
 
         public Optional<Salary> getSalary() {
             return Optional.ofNullable(salary);
+        }
+
+        public void setOtHour(String hours) {
+            this.otHours = hours;
+        }
+
+        public Optional<String> getOtHour() {
+            return Optional.ofNullable(otHours);
+        }
+
+        public void setOtRate(String rate) {
+            this.otRate = rate;
+        }
+
+        public Optional<String> getOtRate() {
+            return Optional.ofNullable(otRate);
+        }
+
+        public void setDeductibles(String deductibles) {
+            this.deductibles = deductibles;
+        }
+
+        public Optional<String> getDeductibles() {
+            return Optional.ofNullable(deductibles);
         }
 
         public void setAddress(Address address) {

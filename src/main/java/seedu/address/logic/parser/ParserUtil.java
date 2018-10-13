@@ -114,6 +114,58 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a (@code String hours) into an (@code String).
+     * Leading and trailing whitespaces will be trimmed.
+     * @param hours
+     * @return A string of the hours after trimming.
+     * @throws ParseException
+     */
+
+    public static String parseOtHours(String hours) throws ParseException {
+        requireNonNull(hours);
+        String trimmedHours = hours.trim();
+        if (!Salary.isValidTwoDecimalNumber(trimmedHours)) {
+            throw new ParseException(Salary.MESSAGE_OTHOUR_CONSTRAINTS);
+        }
+        return trimmedHours;
+    }
+
+    /**
+     * Parses a (@code String rate) into an (@code String).
+     * Leading and trailing whitespaces will be trimmed.
+     * @param rate
+     * @return A string of the rate after trimming.
+     * @throws ParseException
+     */
+
+    public static String parseOtRate(String rate) throws ParseException {
+        requireNonNull(rate);
+        String trimmedRate = rate.trim();
+        if (!Salary.isValidTwoDecimalNumber(trimmedRate)) {
+            throw new ParseException(Salary.MESSAGE_OTRATE_CONSTRAINTS);
+        }
+        return trimmedRate;
+    }
+
+    /**
+     * Parses a (@code String deductibles) into an (@code String).
+     * Leading and trailing whitespaces will be trimmed.
+     * @param deductibles
+     * @return A string of the deductibles after trimming.
+     * @throws ParseException
+     */
+
+    public static String parseDeductibles(String deductibles) throws ParseException {
+        requireNonNull(deductibles);
+        String trimmedDeductibles = deductibles.trim();
+        if (!Salary.isValidTwoDecimalNumber(trimmedDeductibles)) {
+            throw new ParseException(Salary.MESSAGE_DEDUCTIONS_CONSTRAINTS);
+        }
+        return trimmedDeductibles;
+    }
+
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *

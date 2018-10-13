@@ -58,8 +58,8 @@ public class Person {
         return salary;
     }
 
-    public void setSalary(String input) {
-        salary = new Salary(input);
+    public void setSalary(String salary, String hours, String rate, String deductibles) {
+        this.salary = new Salary(salary, hours, rate, deductibles);
     }
 
     public void setSalary(Salary salary) {

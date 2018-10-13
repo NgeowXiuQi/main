@@ -3,8 +3,11 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEDUCTIONS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OTHOUR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OTRATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -34,7 +37,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_SALARY,
-                  PREFIX_TAG);
+                  PREFIX_OTHOUR, PREFIX_OTRATE, PREFIX_DEDUCTIONS, PREFIX_TAG);
 
         Index index;
 
@@ -59,6 +62,16 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
             editPersonDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
+        }
+        if (argMultimap.getValue(PREFIX_OTHOUR).isPresent()) {
+            editPersonDescriptor.setOtHour(ParserUtil.parseOtHours(argMultimap.getValue(PREFIX_OTHOUR).get()));
+        }
+        if (argMultimap.getValue(PREFIX_OTRATE).isPresent()) {
+            editPersonDescriptor.setOtRate(ParserUtil.parseOtRate(argMultimap.getValue(PREFIX_OTRATE).get()));
+        }
+        if (argMultimap.getValue(PREFIX_DEDUCTIONS).isPresent()) {
+            editPersonDescriptor.setDeductibles(ParserUtil.parseDeductibles(
+                argMultimap.getValue(PREFIX_DEDUCTIONS).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
