@@ -27,6 +27,9 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OtHour;
+import seedu.address.model.person.OtRate;
+import seedu.address.model.person.PayDeductibles;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Salary;
@@ -109,19 +112,14 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Salary updatedSalary = editPersonDescriptor.getSalary().orElse(personToEdit.getSalary());
-        String otHours = editPersonDescriptor.getOtHour().orElse(
-            String.valueOf(personToEdit.getSalary().getOverTimeHour()));
-        String otRate = editPersonDescriptor.getOtRate().orElse(
-            String.valueOf(personToEdit.getSalary().getOverTimeRate()));
-        String deductibles = editPersonDescriptor.getDeductibles().orElse(
-            String.valueOf(personToEdit.getSalary().getPayDeductions()));
+        OtHour updatedOtHours = editPersonDescriptor.getOtHour().orElse(personToEdit.getOtHours());
+        OtRate updatedOtRate = editPersonDescriptor.getOtRate().orElse(personToEdit.getOtRate());
+        PayDeductibles updatedDeductibles = editPersonDescriptor.getPayDeductibles().orElse(
+            personToEdit.getPayDeductions());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        Person editedPerson = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
-        updatedSalary.setOverTimeHour(Double.parseDouble(otHours));
-        updatedSalary.setOverTimeRate(Double.parseDouble(otRate));
-        updatedSalary.setPayDeductions(Double.parseDouble(deductibles));
-        editedPerson.setSalary(updatedSalary);
+        Person editedPerson = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedSalary,
+            updatedOtHours, updatedOtRate, updatedDeductibles, updatedTags);
 
         return editedPerson;
     }
@@ -154,9 +152,9 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Salary salary;
-        private String otHours;
-        private String otRate;
-        private String deductibles;
+        private OtHour otHours;
+        private OtRate otRate;
+        private PayDeductibles deductibles;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -217,27 +215,27 @@ public class EditCommand extends Command {
             return Optional.ofNullable(salary);
         }
 
-        public void setOtHour(String hours) {
+        public void setOtHour(OtHour hours) {
             this.otHours = hours;
         }
 
-        public Optional<String> getOtHour() {
+        public Optional<OtHour> getOtHour() {
             return Optional.ofNullable(otHours);
         }
 
-        public void setOtRate(String rate) {
+        public void setOtRate(OtRate rate) {
             this.otRate = rate;
         }
 
-        public Optional<String> getOtRate() {
+        public Optional<OtRate> getOtRate() {
             return Optional.ofNullable(otRate);
         }
 
-        public void setDeductibles(String deductibles) {
+        public void setDeductibles(PayDeductibles deductibles) {
             this.deductibles = deductibles;
         }
 
-        public Optional<String> getDeductibles() {
+        public Optional<PayDeductibles> getPayDeductibles() {
             return Optional.ofNullable(deductibles);
         }
 
@@ -286,6 +284,9 @@ public class EditCommand extends Command {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getSalary().equals(e.getSalary())
+                    && getOtHour().equals(e.getOtHour())
+                    && getOtRate().equals(e.getOtRate())
+                    && getPayDeductibles().equals(e.getPayDeductibles())
                     && getTags().equals(e.getTags());
         }
     }

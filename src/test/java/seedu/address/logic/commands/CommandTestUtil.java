@@ -3,9 +3,13 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEDUCTIONS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OTHOUR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OTRATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -34,6 +38,14 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_SALARY_AMY = "3000";
+    public static final String VALID_SALARY_BOB = "2500";
+    public static final String VALID_OTHOUR_AMY = "30";
+    public static final String VALID_OTHOUR_BOB = "40";
+    public static final String VALID_OTRATE_AMY = "20";
+    public static final String VALID_OTRATE_BOB = "20";
+    public static final String VALID_DEDUCTIBLES_AMY = "200";
+    public static final String VALID_DEDUCTIBLES_BOB = "300";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -45,6 +57,14 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    public static final String SALARY_DESC_AMY = " " + PREFIX_SALARY + VALID_SALARY_AMY;
+    public static final String SALARY_DESC_BOB = " " + PREFIX_SALARY + VALID_SALARY_BOB;
+    public static final String OTHOUR_DESC_AMY = " " + PREFIX_OTHOUR + VALID_OTHOUR_AMY;
+    public static final String OTHOUR_DESC_BOB = " " + PREFIX_OTHOUR + VALID_OTHOUR_BOB;
+    public static final String OTRATE_DESC_AMY = " " + PREFIX_OTRATE + VALID_OTRATE_AMY;
+    public static final String OTRATE_DESC_BOB = " " + PREFIX_OTRATE + VALID_OTRATE_BOB;
+    public static final String DEDUCTIBLES_DESC_AMY = " " + PREFIX_DEDUCTIONS + VALID_DEDUCTIBLES_AMY;
+    public static final String DEDUCTIBLES_DESC_BOB = " " + PREFIX_DEDUCTIONS + VALID_DEDUCTIBLES_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -52,6 +72,11 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    public static final String INVALID_SALARY_DESC = " " + PREFIX_SALARY + "$2500"; // '$' not allowed in salary
+    public static final String INVALID_OTHOUR_DESC = " " + PREFIX_OTHOUR + "25hrs"; // alphabets not allowed in ot hour
+    public static final String INVALID_OTRATE_DESC = " " + PREFIX_OTRATE + "25/hr"; // letters not allowed in or rate
+    public static final String INVALID_DEDUCTIBLES_DESC = " " + PREFIX_DEDUCTIONS
+                                                            + "$200"; // '$' not allowed in deductibles
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
@@ -63,10 +88,12 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withSalary(VALID_SALARY_AMY).withOtHour(VALID_OTHOUR_AMY).withOtRate(VALID_OTRATE_AMY)
+                .withPayDeductibles(VALID_DEDUCTIBLES_AMY).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withSalary(VALID_SALARY_BOB).withOtHour(VALID_OTHOUR_BOB).withOtRate(VALID_OTRATE_BOB)
+                .withPayDeductibles(VALID_DEDUCTIBLES_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**

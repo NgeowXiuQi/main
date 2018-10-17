@@ -12,6 +12,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OtHour;
+import seedu.address.model.person.OtRate;
+import seedu.address.model.person.PayDeductibles;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Salary;
 import seedu.address.model.tag.Tag;
@@ -121,13 +124,13 @@ public class ParserUtil {
      * @throws ParseException
      */
 
-    public static String parseOtHours(String hours) throws ParseException {
+    public static OtHour parseOtHours(String hours) throws ParseException {
         requireNonNull(hours);
         String trimmedHours = hours.trim();
-        if (!Salary.isValidTwoDecimalNumber(trimmedHours)) {
-            throw new ParseException(Salary.MESSAGE_OTHOUR_CONSTRAINTS);
+        if (!OtHour.isValidTwoDecimalNumber(trimmedHours)) {
+            throw new ParseException(OtHour.MESSAGE_OTHOUR_CONSTRAINTS);
         }
-        return trimmedHours;
+        return new OtHour(trimmedHours);
     }
 
     /**
@@ -138,13 +141,13 @@ public class ParserUtil {
      * @throws ParseException
      */
 
-    public static String parseOtRate(String rate) throws ParseException {
+    public static OtRate parseOtRate(String rate) throws ParseException {
         requireNonNull(rate);
         String trimmedRate = rate.trim();
-        if (!Salary.isValidTwoDecimalNumber(trimmedRate)) {
-            throw new ParseException(Salary.MESSAGE_OTRATE_CONSTRAINTS);
+        if (!OtRate.isValidTwoDecimalNumber(trimmedRate)) {
+            throw new ParseException(OtRate.MESSAGE_OTRATE_CONSTRAINTS);
         }
-        return trimmedRate;
+        return new OtRate(trimmedRate);
     }
 
     /**
@@ -155,13 +158,13 @@ public class ParserUtil {
      * @throws ParseException
      */
 
-    public static String parseDeductibles(String deductibles) throws ParseException {
+    public static PayDeductibles parseDeductibles(String deductibles) throws ParseException {
         requireNonNull(deductibles);
         String trimmedDeductibles = deductibles.trim();
-        if (!Salary.isValidTwoDecimalNumber(trimmedDeductibles)) {
-            throw new ParseException(Salary.MESSAGE_DEDUCTIONS_CONSTRAINTS);
+        if (!PayDeductibles.isValidTwoDecimalNumber(trimmedDeductibles)) {
+            throw new ParseException(PayDeductibles.MESSAGE_DEDUCTIONS_CONSTRAINTS);
         }
-        return trimmedDeductibles;
+        return new PayDeductibles(trimmedDeductibles);
     }
 
 

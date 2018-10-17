@@ -6,6 +6,9 @@ import java.util.Set;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OtHour;
+import seedu.address.model.person.OtRate;
+import seedu.address.model.person.PayDeductibles;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Salary;
@@ -22,12 +25,18 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_SALARY = "0";
+    public static final String DEFAULT_OTHOUR = "0";
+    public static final String DEFAULT_OTRATE = "0";
+    public static final String DEFAULT_DEDUCTIBLES = "0";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
     private Salary salary;
+    private OtHour otHour;
+    private OtRate otRate;
+    private PayDeductibles deductibles;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -36,6 +45,9 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         salary = new Salary(DEFAULT_SALARY);
+        otHour = new OtHour(DEFAULT_OTHOUR);
+        otRate = new OtRate(DEFAULT_OTRATE);
+        deductibles = new PayDeductibles(DEFAULT_DEDUCTIBLES);
         tags = new HashSet<>();
     }
 
@@ -48,7 +60,37 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         salary = personToCopy.getSalary();
+        otHour = personToCopy.getOtHours();
+        otRate = personToCopy.getOtRate();
+        deductibles = personToCopy.getPayDeductions();
         tags = new HashSet<>(personToCopy.getTags());
+    }
+
+    /**
+     * Sets the (@code deductibles) of the (@code Person) that we are building.
+     */
+
+    public PersonBuilder withPayDeductibles(String deductibles) {
+        this.deductibles = new PayDeductibles(deductibles);
+        return this;
+    }
+
+    /**
+     * Sets the (@code otRate) of the (@code Person) that we are building.
+     */
+
+    public PersonBuilder withOtRate(String otRate) {
+        this.otRate = new OtRate(otRate);
+        return this;
+    }
+
+    /**
+     * Sets the (@code otHour) of the (@code Person) that we are building.
+     */
+
+    public PersonBuilder withOtHour(String otHour) {
+        this.otHour = new OtHour(otHour);
+        return this;
     }
 
     /**
@@ -105,8 +147,9 @@ public class PersonBuilder {
      */
 
     public Person build() {
-        Person newPerson = new Person(name, phone, email, address, tags);
-        newPerson.setSalary(salary);
+        Person newPerson = new Person(name, phone, email, address,
+          salary, otHour, otRate, deductibles,
+          tags);
         return newPerson;
     }
 

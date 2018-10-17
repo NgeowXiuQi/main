@@ -6,6 +6,10 @@
         <phone>94351253</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
+        <salary>200</salary>
+        <otHours>0</otHours>
+        <otRate>0</otRate>
+        <payDeductibles>0</payDeductibles>
         <tagged>friends</tagged>
     </persons>
 
@@ -15,6 +19,10 @@
         <phone>94351253</phone>
         <email>pauline@example.com</email>
         <address>4th street</address>
+        <salary>200</salary>
+        <otHours>0</otHours>
+        <otRate>0</otRate>
+        <payDeductibles>0</payDeductibles>
     </persons>
 
 </addressbook>

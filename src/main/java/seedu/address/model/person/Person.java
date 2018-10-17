@@ -23,6 +23,9 @@ public class Person {
     // Data fields
     private final Address address;
     private Salary salary;
+    private OtHour otHours;
+    private OtRate otRate;
+    private PayDeductibles payDeductions;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
@@ -35,6 +38,23 @@ public class Person {
         this.email = email;
         this.address = address;
         this.salary = new Salary("0");
+        this.otHours = new OtHour("0");
+        this.otRate = new OtRate("0");
+        this.payDeductions = new PayDeductibles("0");
+        this.tags.addAll(tags);
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Salary salary, OtHour otHours,
+                  OtRate otRate, PayDeductibles payDeductibles, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.salary = salary;
+        this.otHours = otHours;
+        this.otRate = otRate;
+        this.payDeductions = payDeductibles;
         this.tags.addAll(tags);
     }
 
@@ -54,16 +74,22 @@ public class Person {
         return address;
     }
 
-    public Salary getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary, String hours, String rate, String deductibles) {
-        this.salary = new Salary(salary, hours, rate, deductibles);
-    }
+    public Salary getSalary() { return salary; }
 
     public void setSalary(Salary salary) {
         this.salary = salary;
+    }
+
+    public OtHour getOtHours() {
+        return otHours;
+    }
+
+    public OtRate getOtRate() {
+        return otRate;
+    }
+
+    public PayDeductibles getPayDeductions() {
+        return payDeductions;
     }
 
     /**
@@ -108,13 +134,16 @@ public class Person {
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
                 && otherPerson.getSalary().equals(getSalary())
+                && otherPerson.getOtHours().equals(getOtHours())
+                && otherPerson.getOtRate().equals(getOtRate())
+                && otherPerson.getPayDeductions().equals(getPayDeductions())
                 && otherPerson.getTags().equals(getTags());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, salary, otHours, otRate, payDeductions, tags);
     }
 
     @Override
@@ -129,9 +158,16 @@ public class Person {
                 .append(getAddress())
                 .append(" Salary: ")
                 .append(getSalary())
+                .append(" OT Hours: ")
+                .append(getOtHours())
+                .append(" OT Rate: ")
+                .append(getOtRate())
+                .append(" Pay Deductibles: ")
+                .append(getPayDeductions())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
+
 
 }

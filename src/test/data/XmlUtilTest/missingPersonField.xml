@@ -4,5 +4,9 @@
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <salary>2000</salary>
+    <otHours>20</otHours>
+    <otRate>10</otRate>
+    <payDeductibles>50</payDeductibles>
     <tagged>friends</tagged>
 </person>

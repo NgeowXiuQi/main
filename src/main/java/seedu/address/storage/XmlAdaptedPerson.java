@@ -13,8 +13,12 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OtHour;
+import seedu.address.model.person.OtRate;
+import seedu.address.model.person.PayDeductibles;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Salary;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,6 +36,15 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String salary;
+    @XmlElement(required = true)
+    private String otHours;
+    @XmlElement(required = true)
+    private String otRate;
+    @XmlElement(required = true)
+    private String payDeductibles;
+
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -45,11 +58,16 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, String salary, String otHours,
+                            String otRate, String deductibles, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.salary = salary;
+        this.otHours = otHours;
+        this.otRate = otRate;
+        this.payDeductibles = deductibles;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -65,6 +83,10 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        salary = source.getSalary().salary;
+        otHours = source.getOtHours().overTimeHour;
+        otRate = source.getOtRate().overTimeRate;
+        payDeductibles = source.getPayDeductions().payDeductibles;
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -113,8 +135,42 @@ public class XmlAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        if (salary == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Salary.class.getSimpleName()));
+        }
+        if (!Salary.isValidSalary(salary)) {
+            throw new IllegalValueException(Salary.MESSAGE_SALARY_CONSTRAINTS);
+        }
+        final Salary modelSalary = new Salary(salary);
+
+        if (otHours == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, OtHour.class.getSimpleName()));
+        }
+        if (!OtHour.isValidTwoDecimalNumber(otHours)) {
+            throw new IllegalValueException(OtHour.MESSAGE_OTHOUR_CONSTRAINTS);
+        }
+        final OtHour modelHours = new OtHour(otHours);
+
+        if (otRate == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, OtRate.class.getSimpleName()));
+        }
+        if (!OtHour.isValidTwoDecimalNumber(otRate)) {
+            throw new IllegalValueException(OtRate.MESSAGE_OTRATE_CONSTRAINTS);
+        }
+        final OtRate modelRate = new OtRate(otRate);
+
+        if (payDeductibles == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+              PayDeductibles.class.getSimpleName()));
+        }
+        if (!PayDeductibles.isValidTwoDecimalNumber(payDeductibles)) {
+            throw new IllegalValueException(PayDeductibles.MESSAGE_DEDUCTIONS_CONSTRAINTS);
+        }
+        final PayDeductibles modelDeductibles = new PayDeductibles(payDeductibles);
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelSalary, modelHours,
+          modelRate, modelDeductibles, modelTags);
     }
 
     @Override
@@ -132,6 +188,10 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
+                && Objects.equals(salary, otherPerson.salary)
+                && Objects.equals(otHours, otherPerson.otHours)
+                && Objects.equals(otRate, otherPerson.otRate)
+                && Objects.equals(payDeductibles, otherPerson.payDeductibles)
                 && tagged.equals(otherPerson.tagged);
     }
 }
